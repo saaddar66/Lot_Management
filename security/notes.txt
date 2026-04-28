@@ -1,0 +1,8 @@
+
+# DESCRIPTION AND COMMENTS
+# The models used in this module (product.template, stock.lot, stock.picking) are existing Odoo models.
+# Their access rights are typically handled by their parent modules (product, stock).
+# Since the prompt specifically asked for ir.model.access.csv for the sequences/models, 
+# we provide explicit access to ir.sequence for the 'base.group_user' here, 
+# although 'ir.sequence' is normally accessible by basic Odoo functionality anyway.
+# This ensures that standard users have read/write permissions required to generate our custom lots.

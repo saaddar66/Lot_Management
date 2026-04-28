@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Product Categories -->
+        <record id="cat_raw_material" model="product.category">
+            <field name="name">Raw Material</field>
+        </record>
+        <record id="cat_semi_finished" model="product.category">
+            <field name="name">Semi-Finished Goods</field>
+        </record>
+        <record id="cat_finished" model="product.category">
+            <field name="name">Finished Goods</field>
+        </record>
+    </data>
+</odoo>
+<!-- 
+DESCRIPTION AND COMMENTS
+This XML file creates three new product categories required for our custom lot management logic:
+1. Raw Material
+2. Semi-Finished Goods
+3. Finished Goods
+The 'noupdate="1"' attribute ensures that any manual changes made to these categories in the 
+Odoo interface are not overwritten during module upgrades.
+-->
