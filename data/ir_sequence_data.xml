@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
-        <!-- Sequence for Raw Materials: Prefix '1', padding 6, starting at 1 -->
+        <!-- Sequence for Raw Materials: Prefix '1', padding 6 -->
         <record id="seq_raw_material_lot" model="ir.sequence">
             <field name="name">Raw Material Lot Sequence</field>
             <field name="code">lot.sequence.raw</field>
@@ -12,12 +12,23 @@
             <field name="implementation">standard</field>
         </record>
 
-        <!-- Sequence for Finished/Semi-Finished: Padding 7, starting at 1 -->
+        <!-- Sequence for Semi-Finished Goods: Prefix '2', padding 6 -->
+        <record id="seq_semi_finished_lot" model="ir.sequence">
+            <field name="name">Semi-Finished Lot Sequence</field>
+            <field name="code">lot.sequence.semi</field>
+            <field name="prefix">2</field>
+            <field name="padding">6</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+            <field name="implementation">standard</field>
+        </record>
+
+        <!-- Sequence for Finished Goods: Prefix '3', padding 6 -->
         <record id="seq_finished_lot" model="ir.sequence">
             <field name="name">Finished Goods Lot Sequence</field>
             <field name="code">lot.sequence.finished</field>
-            <field name="prefix"></field>
-            <field name="padding">7</field>
+            <field name="prefix">3</field>
+            <field name="padding">6</field>
             <field name="number_next">1</field>
             <field name="number_increment">1</field>
             <field name="implementation">standard</field>

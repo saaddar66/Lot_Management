@@ -4,29 +4,31 @@ class StockPicking(models.Model):
     _inherit = 'stock.picking'
 
     def button_validate(self):
-        # Before validation logic executes, ensure lots are populated
+        # Ensure lots are populated for incoming receipts
         for picking in self:
-            # Check if this is an incoming receipt
             if picking.picking_type_id.code == 'incoming':
                 for move_line in picking.move_line_ids:
                     product = move_line.product_id
-                    if product.categ_id.name in ['Raw Material', 'Semi-Finished Goods', 'Finished Goods']:
-                        # If a lot number hasn't been manually assigned yet
+                    category = product.categ_id.name
+                    
+                    if category in ['Raw Material', 'Semi-Finished Goods', 'Finished Goods']:
+                        # Only generate if both lot_id and lot_name are missing
                         if not move_line.lot_id and not move_line.lot_name:
-                            # Automatically fetch the next lot sequence
-                            if product.categ_id.name == 'Raw Material':
+                            
+                            # Triple logic split for sequences
+                            if category == 'Raw Material':
                                 lot_name = self.env['ir.sequence'].next_by_code('lot.sequence.raw')
-                            else:
+                            elif category == 'Semi-Finished Goods':
+                                lot_name = self.env['ir.sequence'].next_by_code('lot.sequence.semi')
+                            elif category == 'Finished Goods':
                                 lot_name = self.env['ir.sequence'].next_by_code('lot.sequence.finished')
                             
                             move_line.lot_name = lot_name
         
-        # Proceed with normal validation
         return super(StockPicking, self).button_validate()
 
 # DESCRIPTION AND COMMENTS
-# Here we inherit stock.picking and override button_validate.
-# During a receipt validation, we iterate over the stock move lines.
-# If a line concerns one of our targeted categories and is missing a lot number,
-# we generate and assign the sequence name dynamically to the lot_name field.
-# Odoo handles creating the actual stock.lot records based on this lot_name during validation.
+# The button_validate method in stock.picking is updated to support the new triple sequence logic.
+# When validating a Receipt, it automatically generates lot numbers for Raw Materials,
+# Semi-Finished, or Finished goods if they are missing. This ensures traceability 
+# from the moment items enter the warehouse.
